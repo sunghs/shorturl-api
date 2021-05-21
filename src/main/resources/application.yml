@@ -7,4 +7,6 @@ spring:
     active: local
 
 short:
-  prefix-url: http://localhost
+  prefix-url: http://localhost:8080/
+  validation-time: 86400
+  limited-character-size: 8
