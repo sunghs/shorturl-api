@@ -11,6 +11,8 @@ public class ShortUrlComponent {
 
     private String prefixUrl;
 
+    private String characterList;
+
     private long validationTime;
 
     private int limitedCharacterSize;
