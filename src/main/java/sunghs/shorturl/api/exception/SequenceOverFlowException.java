@@ -1,4 +1,10 @@
 package sunghs.shorturl.api.exception;
 
-public class SequenceOverFlowException extends AbstractRuntimeException {
+import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
+
+public class SequenceOverFlowException extends CodeBasedException {
+
+    public SequenceOverFlowException(final ExceptionCodeManager exceptionCodeManager, long value) {
+        super(exceptionCodeManager, String.valueOf(value));
+    }
 }

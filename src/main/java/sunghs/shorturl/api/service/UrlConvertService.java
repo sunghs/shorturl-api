@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sunghs.shorturl.api.exception.SequenceOverFlowException;
+import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
 import sunghs.shorturl.api.model.ShortUrlComponent;
 
 import javax.annotation.PostConstruct;
@@ -27,7 +28,7 @@ public class UrlConvertService {
 
     public String convertSeqToUrl(long seq) {
         if (seq >= limitedCount) {
-            throw new SequenceOverFlowException();
+            throw new SequenceOverFlowException(ExceptionCodeManager.SEQUENCE_OVERFLOW, limitedCount - 1);
         }
 
         StringBuffer result = new StringBuffer(shortUrlComponent.getPrefixUrl());
@@ -47,7 +48,7 @@ public class UrlConvertService {
         long result = 0;
 
         for (int i = 0; i < replacedUrl.length(); i++) {
-            result += characterArray[unfoldUrl[i]] * (characterArray.length ^ i);
+            result += characterArray[unfoldUrl[i]] * (Math.pow(characterArray.length, i));
         }
 
         log.info("convert {} to {}", shortUrl, result);
