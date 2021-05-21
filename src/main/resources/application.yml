@@ -5,3 +5,6 @@ spring:
     name: shorturl-api
   profiles:
     active: local
+
+short:
+  prefix-url: http://localhost
