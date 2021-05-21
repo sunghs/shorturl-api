@@ -5,6 +5,29 @@ spring:
     name: shorturl-api
   profiles:
     active: local
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: false
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:10000/shorturl?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
+    username: root
+    password: password
+    hikari:
+      connection-test-query: select 1 from dual
+      pool-name: default-shorturl-pool
+      minimum-idle: 1
+      maximum-pool-size: 10
+      validation-timeout: 60000
+      auto-commit: true
+      connection-timeout: 60000
+      idle-timeout: 1800000
+      max-lifetime: 3600000
 
 short:
   prefix-url: http://localhost:8080/
