@@ -3,11 +3,14 @@ package sunghs.shorturl.api.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import sunghs.shorturl.api.exception.CharacterNotFoundException;
 import sunghs.shorturl.api.exception.SequenceOverFlowException;
 import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
 import sunghs.shorturl.api.model.ShortUrlComponent;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Slf4j
 @Service
@@ -26,12 +29,20 @@ public class UrlConvertService {
         limitedCount = (long) Math.pow(shortUrlComponent.getCharacterList().length(), shortUrlComponent.getLimitedCharacterSize());
     }
 
+    public String getPrefixUrl() {
+        return shortUrlComponent.getPrefixUrl();
+    }
+
+    public LocalDateTime getValidationTime() {
+        return LocalDateTime.now().plusHours(shortUrlComponent.getValidationHours());
+    }
+
     public String convertSeqToUrl(long seq) {
         if (seq >= limitedCount) {
             throw new SequenceOverFlowException(ExceptionCodeManager.SEQUENCE_OVERFLOW, limitedCount - 1);
         }
 
-        StringBuffer result = new StringBuffer(shortUrlComponent.getPrefixUrl());
+        StringBuffer result = new StringBuffer();
 
         while (seq > 0) {
             result.append(characterArray[((int) (seq % characterArray.length))]);
@@ -43,15 +54,22 @@ public class UrlConvertService {
     }
 
     public long convertUrlToSeq(String shortUrl) {
-        String replacedUrl = shortUrl.trim().replace(shortUrlComponent.getPrefixUrl(), "");
-        char[] unfoldUrl = replacedUrl.toCharArray();
+        char[] unfoldUrl = shortUrl.toCharArray();
         long result = 0;
 
-        for (int i = 0; i < replacedUrl.length(); i++) {
-            result += characterArray[unfoldUrl[i]] * (Math.pow(characterArray.length, i));
+        for (int i = 0; i < unfoldUrl.length; i++) {
+            result += search(unfoldUrl[i]) * (Math.pow(characterArray.length, i));
         }
 
         log.info("convert {} to {}", shortUrl, result);
         return result;
+    }
+
+    private int search(char c) {
+        try {
+            return Arrays.binarySearch(characterArray, c);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new CharacterNotFoundException(ExceptionCodeManager.CHARACTER_NOT_FOUND, e.getLocalizedMessage());
+        }
     }
 }

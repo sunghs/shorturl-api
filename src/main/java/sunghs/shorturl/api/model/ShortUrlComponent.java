@@ -13,7 +13,7 @@ public class ShortUrlComponent {
 
     private String characterList;
 
-    private long validationTime;
+    private int validationHours;
 
     private int limitedCharacterSize;
 }

@@ -8,6 +8,6 @@ spring:
 
 short:
   prefix-url: http://localhost:8080/
-  character-list: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890
-  validation-time: 86400
+  character-list: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+  validation-hours: 24
   limited-character-size: 8

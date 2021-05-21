@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+import sunghs.shorturl.api.exception.SequenceOverFlowException;
 import sunghs.shorturl.api.service.UrlConvertService;
 
 @Slf4j
@@ -19,23 +20,26 @@ public class UrlConvertTests {
     private final UrlConvertService urlConvertService;
 
     @ParameterizedTest
-    @ValueSource(longs = {1, 293, 3531, 59128, 927852, 8276302, 348728301, 289379234, 689572983, Long.MAX_VALUE})
+    @ValueSource(longs = {1, 293, 3531, 59128, 927852, 8276302, 348728301, 289379234, 689572983, 218340105584895L})
     @DisplayName("sequence 기반 url convert 테스트")
     void shortUrlConvertTest(long given) {
         String actual = urlConvertService.convertSeqToUrl(given);
-        Assertions.assertTrue(actual.length() > 0);
+        Assertions.assertTrue(actual.length() > 0 && actual.length() <= 8);
     }
 
     @ParameterizedTest
-    @ValueSource(longs = {218_340_105_584_895L, 218_340_105_584_896L, 218_340_105_584_897L})
-    @DisplayName("변환 시 8자리를 넘기는 임계값 테스트")
-    void limitedSizeTest(long given) {
+    @ValueSource(longs = {1, 293, 3531, 59128, 927852, 8276302, 348728301, 289379234, 689572983, 218340105584895L})
+    @DisplayName("sequence 기반 url convert 후 다시 sequence 변환 테스트")
+    void originalSeqConvertTest(long given) {
         String actual = urlConvertService.convertSeqToUrl(given);
+        long convertedSeq =  urlConvertService.convertUrlToSeq(actual);
+        Assertions.assertEquals(given, convertedSeq);
+    }
 
-        if (given == 218_340_105_584_895L) {
-            Assertions.assertEquals(8, actual.length());
-        } else {
-            Assertions.assertEquals(9, actual.length());
-        }
+    @ParameterizedTest
+    @ValueSource(longs = {218340105584896L, 218340105584897L, Long.MAX_VALUE})
+    @DisplayName("최대값이 넘는 경우 테스트")
+    void overFlowSeqTest(long given) {
+        Assertions.assertThrows(SequenceOverFlowException.class, () -> urlConvertService.convertSeqToUrl(given));
     }
 }
