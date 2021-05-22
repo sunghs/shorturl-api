@@ -1,5 +1,6 @@
 server:
   port: 8080
+
 spring:
   application:
     name: shorturl-api
@@ -15,22 +16,22 @@ spring:
       ddl-auto: none
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:10000/shorturl?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:19071/shorturl?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
     username: root
     password: password
     hikari:
       connection-test-query: select 1 from dual
       pool-name: default-shorturl-pool
+      auto-commit: true
       minimum-idle: 1
       maximum-pool-size: 10
       validation-timeout: 60000
-      auto-commit: true
       connection-timeout: 60000
       idle-timeout: 1800000
       max-lifetime: 3600000
 
 short:
-  prefix-url: http://localhost:8080/
+  prefix-url: http://localhost:${server.port}/
   character-list: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
   validation-hours: 24
   limited-character-size: 8

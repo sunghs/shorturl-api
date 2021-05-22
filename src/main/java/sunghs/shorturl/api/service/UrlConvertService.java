@@ -9,7 +9,6 @@ import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
 import sunghs.shorturl.api.model.ShortUrlComponent;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Slf4j
@@ -29,14 +28,12 @@ public class UrlConvertService {
         limitedCount = (long) Math.pow(shortUrlComponent.getCharacterList().length(), shortUrlComponent.getLimitedCharacterSize());
     }
 
-    public String getPrefixUrl() {
-        return shortUrlComponent.getPrefixUrl();
-    }
-
-    public LocalDateTime getValidationTime() {
-        return LocalDateTime.now().plusHours(shortUrlComponent.getValidationHours());
-    }
-
+    /**
+     * sequence 를 키로 하여 문자열을 생성합니다.
+     *
+     * @param seq long sequence
+     * @return String ShortUrl
+     */
     public String convertSeqToUrl(long seq) {
         if (seq >= limitedCount) {
             throw new SequenceOverFlowException(ExceptionCodeManager.SEQUENCE_OVERFLOW, limitedCount - 1);
@@ -53,6 +50,12 @@ public class UrlConvertService {
         return result.toString();
     }
 
+    /**
+     * 문자열을 기반으로 sequence로 생성합니다.
+     *
+     * @param shortUrl shortUrl
+     * @return long sequence
+     */
     public long convertUrlToSeq(String shortUrl) {
         char[] unfoldUrl = shortUrl.toCharArray();
         long result = 0;
