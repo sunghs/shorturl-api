@@ -2,12 +2,17 @@ package sunghs.shorturl.api.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sunghs.shorturl.api.model.ShortUrlComponent;
 import sunghs.shorturl.api.model.ShortUrlRequestDto;
 import sunghs.shorturl.api.model.ShortUrlResponseDto;
+import sunghs.shorturl.api.model.entity.ShortUrlInfo;
+import sunghs.shorturl.api.repository.ShortUrlInfoRepository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -17,6 +22,8 @@ public class ShortConvertService {
     private final ShortUrlComponent shortUrlComponent;
 
     private final UrlConvertService urlConvertService;
+
+    private final ShortUrlInfoRepository shortUrlInfoRepository;
 
     public String getPrefixUrl() {
         return shortUrlComponent.getPrefixUrl();
@@ -32,9 +39,26 @@ public class ShortConvertService {
      * @param requestDto ShortUrlRequestDto
      * @return ShortUrlResponseDto
      */
+    @Transactional(rollbackFor = Exception.class)
     public ShortUrlResponseDto convert(final ShortUrlRequestDto requestDto) {
-        StringBuffer shortUrl = new StringBuffer(getPrefixUrl());
+        Optional<ShortUrlInfo> optionalShortUrlInfo = shortUrlInfoRepository.findByOriginalUrlAndExpireDtGreaterThan(
+            requestDto.getOriginalUrl(), LocalDateTime.now());
 
-        return new ShortUrlResponseDto();
+        final ShortUrlInfo shortUrlInfo = optionalShortUrlInfo.orElseGet(() -> ShortUrlInfo.builder()
+            .originalUrl(requestDto.getOriginalUrl())
+            .requestCount(1)
+            .expireDt(getValidationTime())
+            .build());
+
+        if (StringUtils.isNotEmpty(shortUrlInfo.getShortUrl())) {
+            shortUrlInfo.addRequestCount();
+        } else {
+            shortUrlInfoRepository.save(shortUrlInfo);
+            shortUrlInfo.setShortUrl(getPrefixUrl() + urlConvertService.convertSeqToUrl(shortUrlInfo.getSeq()));
+        }
+
+        shortUrlInfoRepository.save(shortUrlInfo);
+
+        return shortUrlInfo.of();
     }
 }

@@ -14,17 +14,11 @@ import java.time.LocalDateTime;
 @ApiModel("단축 URL response")
 public class ShortUrlResponseDto {
 
-    @ApiModelProperty("원본 URL")
-    private String originalUrl;
-
     @ApiModelProperty("변환 된 단축 URL")
     private String shortUrl;
 
     @ApiModelProperty("요청 횟수")
-    private int requestCount;
-
-    @ApiModelProperty("생성 시간")
-    private LocalDateTime createDt;
+    private long requestCount;
 
     @ApiModelProperty("만료 시간")
     private LocalDateTime expireDt;

@@ -13,7 +13,7 @@ import sunghs.shorturl.api.model.ShortUrlComponent;
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @RequiredArgsConstructor
-public class ShortUrlValidationTests {
+class ShortUrlValidationTests {
 
     private final ShortUrlComponent shortUrlComponent;
 

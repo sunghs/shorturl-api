@@ -1,12 +1,17 @@
 package sunghs.shorturl.api.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sunghs.shorturl.api.model.ShortUrlRequestDto;
+import sunghs.shorturl.api.model.ShortUrlResponseDto;
+import sunghs.shorturl.api.service.ShortConvertService;
+
+import javax.validation.Valid;
 
 @Api(value = "UrlConvertController", tags = "단축 URL 요청 컨트롤러")
 @ApiResponses(value = {
@@ -24,4 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/url", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class UrlConvertController {
+
+    private final ShortConvertService shortConvertService;
+
+    @ApiOperation("단축 Url 정보 요청")
+    @PostMapping("/short")
+    public ShortUrlResponseDto sendRedirect(@ApiParam(value = "원본 Url", required = true) @Valid @RequestBody final ShortUrlRequestDto requestDto) {
+        return shortConvertService.convert(requestDto);
+    }
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@Api(value = "ShortUrlController", tags = "단축 URL 요청 컨트롤러")
+@Api(value = "ShortUrlRedirectController", tags = "단축 URL 이동 컨트롤러")
 @ApiResponses(value = {
     @ApiResponse(code = 200, message = "OK, 성공"),
     @ApiResponse(code = 201, message = "Created, 리소스 생성 성공"),

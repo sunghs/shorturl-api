@@ -15,7 +15,7 @@ import sunghs.shorturl.api.service.UrlConvertService;
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @RequiredArgsConstructor
-public class UrlConvertTests {
+class UrlConvertTests {
 
     private final UrlConvertService urlConvertService;
 
