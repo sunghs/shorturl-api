@@ -19,7 +19,6 @@ import javax.validation.Valid;
 @Api(value = "UrlConvertController", tags = "단축 URL 요청 컨트롤러")
 @ApiResponses(value = {
     @ApiResponse(code = 200, message = "OK, 성공"),
-    @ApiResponse(code = 201, message = "Created, 리소스 생성 성공"),
     @ApiResponse(code = 307, message = "Temporary Redirect, URI가 변경 됨"),
     @ApiResponse(code = 401, message = "Unauthorized, 인증되지 않음"),
     @ApiResponse(code = 403, message = "Forbidden, 권한이 없음"),
