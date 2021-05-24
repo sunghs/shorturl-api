@@ -30,14 +30,6 @@ public class ShortConvertService {
 
     private final ShortUrlInfoRepository shortUrlInfoRepository;
 
-    public String getPrefixUrl() {
-        return shortUrlComponent.getPrefixUrl();
-    }
-
-    public LocalDateTime getValidationTime() {
-        return LocalDateTime.now().plusDays(shortUrlComponent.getValidationDays());
-    }
-
     /**
      * 원본 URL을 단축 URL로 변환합니다.
      *
@@ -69,5 +61,13 @@ public class ShortConvertService {
         shortUrlInfoRepository.save(shortUrlInfo);
 
         return ShortUrlResponseDto.of(shortUrlInfo);
+    }
+
+    private String getPrefixUrl() {
+        return shortUrlComponent.getPrefixUrl();
+    }
+
+    private LocalDateTime getValidationTime() {
+        return LocalDateTime.now().plusDays(shortUrlComponent.getValidationDays());
     }
 }

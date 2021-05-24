@@ -23,10 +23,6 @@ public class OriginalConvertService {
 
     private final ShortUrlInfoRepository shortUrlInfoRepository;
 
-    public String removePrefixUrl(String url) {
-        return url.replaceFirst(shortUrlComponent.getPrefixUrl(), "");
-    }
-
     /**
      * 단축 URL을 원본 URL 정보로 변환합니다.
      *
@@ -44,5 +40,9 @@ public class OriginalConvertService {
         shortUrlInfoRepository.save(shortUrlInfo);
 
         return OriginalUrlResponseDto.of(shortUrlInfo);
+    }
+
+    private String removePrefixUrl(String url) {
+        return url.replaceFirst(shortUrlComponent.getPrefixUrl(), "");
     }
 }
