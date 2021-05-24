@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS shorturl.short_url_info (
     create_dt datetime NOT NULL COMMENT '생성시간',
     expire_dt datetime NOT NULL COMMENT '만료시간',
     PRIMARY KEY(seq),
-    INDEX idx_short_url_info_1 (original_url, short_url)
+    INDEX idx_short_url_info_1 (original_url, expire_dt)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000000 COMMENT='단축 URL 변환 정보 테이블';

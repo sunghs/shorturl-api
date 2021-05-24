@@ -6,18 +6,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sunghs.shorturl.api.exception.ShortUrlNotFoundException;
 import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
-import sunghs.shorturl.api.model.ShortUrlComponent;
 import sunghs.shorturl.api.model.entity.ShortUrlInfo;
 import sunghs.shorturl.api.repository.ShortUrlInfoRepository;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UrlRedirectService {
 
-    private final ShortUrlComponent shortUrlComponent;
+    private final UrlConvertService urlConvertService;
 
     private final ShortUrlInfoRepository shortUrlInfoRepository;
 
@@ -29,9 +26,10 @@ public class UrlRedirectService {
      */
     @Transactional(rollbackFor = Exception.class)
     public String getOriginalUrl(final String shortUrl) {
-        String fixedShortUrl = shortUrlComponent.getPrefixUrl() + shortUrl;
-        ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findByShortUrlAndExpireDtGreaterThan(
-            fixedShortUrl, LocalDateTime.now()).orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
+        long seq = urlConvertService.convertUrlToSeq(shortUrl);
+
+        ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findById(seq)
+            .orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
 
         shortUrlInfo.addRequestCount();
         shortUrlInfoRepository.save(shortUrlInfo);

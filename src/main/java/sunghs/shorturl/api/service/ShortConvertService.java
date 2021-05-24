@@ -22,13 +22,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ShortConvertService {
 
+    private final UrlValidator urlValidator;
+
     private final ShortUrlComponent shortUrlComponent;
 
     private final UrlConvertService urlConvertService;
 
     private final ShortUrlInfoRepository shortUrlInfoRepository;
-
-    private final UrlValidator urlValidator;
 
     public String getPrefixUrl() {
         return shortUrlComponent.getPrefixUrl();

@@ -11,6 +11,4 @@ import java.util.Optional;
 public interface ShortUrlInfoRepository extends JpaRepository<ShortUrlInfo, Long> {
 
     Optional<ShortUrlInfo> findByOriginalUrlAndExpireDtGreaterThan(final String originalUrl, final LocalDateTime expireDt);
-
-    Optional<ShortUrlInfo> findByShortUrlAndExpireDtGreaterThan(final String shortUrl, final LocalDateTime expireDt);
 }

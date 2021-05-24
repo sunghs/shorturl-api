@@ -1,5 +1,6 @@
 package sunghs.shorturl.core.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.RegexValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.InitializingBean;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 import sunghs.shorturl.api.model.ShortUrlComponent;
 
+@Slf4j
 @Configuration
 @EnableConfigurationProperties
 public class ShortUrlComponentConfig implements InitializingBean {

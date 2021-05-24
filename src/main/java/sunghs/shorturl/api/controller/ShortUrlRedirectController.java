@@ -32,7 +32,7 @@ public class ShortUrlRedirectController {
 
     private final UrlRedirectService urlRedirectService;
 
-    @ApiOperation("단축 Url 이동 요청")
+    @ApiOperation(value = "단축 Url 이동 요청", hidden = true)
     @GetMapping("/{shortUrl}")
     public void sendRedirect(final HttpServletResponse httpServletResponse,
         @ApiParam(value = "도메인을 제외한 단축 Url", required = true) @Valid @PathVariable("shortUrl") final String shortUrl) throws IOException {

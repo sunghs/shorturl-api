@@ -8,17 +8,24 @@ import sunghs.shorturl.api.exception.ShortUrlNotFoundException;
 import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
 import sunghs.shorturl.api.model.OriginalUrlRequestDto;
 import sunghs.shorturl.api.model.OriginalUrlResponseDto;
+import sunghs.shorturl.api.model.ShortUrlComponent;
 import sunghs.shorturl.api.model.entity.ShortUrlInfo;
 import sunghs.shorturl.api.repository.ShortUrlInfoRepository;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class OriginalConvertService {
 
+    private final ShortUrlComponent shortUrlComponent;
+
+    private final UrlConvertService urlConvertService;
+
     private final ShortUrlInfoRepository shortUrlInfoRepository;
+
+    public String removePrefixUrl(String url) {
+        return url.replaceFirst(shortUrlComponent.getPrefixUrl(), "");
+    }
 
     /**
      * 단축 URL을 원본 URL 정보로 변환합니다.
@@ -28,8 +35,10 @@ public class OriginalConvertService {
      */
     @Transactional(rollbackFor = Exception.class)
     public OriginalUrlResponseDto convert(final OriginalUrlRequestDto requestDto) {
-        ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findByShortUrlAndExpireDtGreaterThan(
-            requestDto.getShortUrl(), LocalDateTime.now()).orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
+        long seq = urlConvertService.convertUrlToSeq(removePrefixUrl(requestDto.getShortUrl()));
+
+        ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findById(seq)
+            .orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
 
         shortUrlInfo.addRequestCount();
         shortUrlInfoRepository.save(shortUrlInfo);
