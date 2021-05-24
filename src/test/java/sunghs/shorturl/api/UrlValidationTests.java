@@ -1,7 +1,5 @@
 package sunghs.shorturl.api;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.RegexValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@Slf4j
-@RequiredArgsConstructor
 class UrlValidationTests {
 
     private final UrlValidator urlValidator = new UrlValidator(new RegexValidator(new String[] {"http", "https","((localhost)(:[0-9]+))"}), 0);
