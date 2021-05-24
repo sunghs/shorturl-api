@@ -68,6 +68,6 @@ public class ShortConvertService {
 
         shortUrlInfoRepository.save(shortUrlInfo);
 
-        return shortUrlInfo.of();
+        return ShortUrlResponseDto.of(shortUrlInfo);
     }
 }

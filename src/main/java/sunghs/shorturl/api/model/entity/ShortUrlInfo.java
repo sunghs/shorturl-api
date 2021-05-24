@@ -9,7 +9,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import sunghs.shorturl.api.exception.AlreadyExistException;
 import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
-import sunghs.shorturl.api.model.ShortUrlResponseDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -52,9 +51,5 @@ public class ShortUrlInfo {
             throw new AlreadyExistException(ExceptionCodeManager.ALREADY_SHORT_URL_EXIST);
         }
         this.shortUrl = shortUrl;
-    }
-
-    public ShortUrlResponseDto of() {
-        return new ShortUrlResponseDto(this.shortUrl, this.requestCount, this.expireDt);
     }
 }

@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sunghs.shorturl.api.model.OriginalUrlRequestDto;
+import sunghs.shorturl.api.model.OriginalUrlResponseDto;
 import sunghs.shorturl.api.model.ShortUrlRequestDto;
 import sunghs.shorturl.api.model.ShortUrlResponseDto;
+import sunghs.shorturl.api.service.OriginalConvertService;
 import sunghs.shorturl.api.service.ShortConvertService;
 
 import javax.validation.Valid;
@@ -32,9 +35,17 @@ public class UrlConvertController {
 
     private final ShortConvertService shortConvertService;
 
+    private final OriginalConvertService originalConvertService;
+
     @ApiOperation("단축 Url 정보 요청")
     @PostMapping("/short")
-    public ShortUrlResponseDto sendRedirect(@ApiParam(value = "원본 Url", required = true) @Valid @RequestBody final ShortUrlRequestDto requestDto) {
+    public ShortUrlResponseDto getShortUrl(@ApiParam(value = "원본 Url", required = true) @Valid @RequestBody final ShortUrlRequestDto requestDto) {
         return shortConvertService.convert(requestDto);
+    }
+
+    @ApiOperation("원본 Url 정보 요청")
+    @PostMapping("/original")
+    public OriginalUrlResponseDto getOriginalUrl(@ApiParam(value = "단축 Url", required = true) @Valid @RequestBody final OriginalUrlRequestDto requestDto) {
+        return originalConvertService.convert(requestDto);
     }
 }

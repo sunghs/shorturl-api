@@ -3,6 +3,7 @@ package sunghs.shorturl.api.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import sunghs.shorturl.api.model.entity.ShortUrlInfo;
 
 import java.time.LocalDateTime;
 
@@ -22,4 +23,8 @@ public class ShortUrlResponseDto {
 
     @ApiModelProperty("만료 시간")
     private LocalDateTime expireDt;
+
+    public static ShortUrlResponseDto of(final ShortUrlInfo shortUrlInfo) {
+        return new ShortUrlResponseDto(shortUrlInfo.getShortUrl(), shortUrlInfo.getRequestCount(), shortUrlInfo.getExpireDt());
+    }
 }
