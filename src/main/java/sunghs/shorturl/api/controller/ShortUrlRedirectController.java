@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sunghs.shorturl.api.service.UrlRedirectService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -29,10 +30,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ShortUrlRedirectController {
 
+    private final UrlRedirectService urlRedirectService;
+
     @ApiOperation("단축 Url 이동 요청")
     @GetMapping("/{shortUrl}")
     public void sendRedirect(final HttpServletResponse httpServletResponse,
         @ApiParam(value = "단축 Url", required = true) @Valid @PathVariable("shortUrl") final String shortUrl) throws IOException {
-        httpServletResponse.sendRedirect("https://www.google.com");
+        String originalUrl = urlRedirectService.getOriginalUrl(shortUrl);
+        httpServletResponse.sendRedirect(originalUrl);
     }
 }

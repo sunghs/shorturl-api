@@ -30,7 +30,7 @@ public class ShortConvertService {
     }
 
     public LocalDateTime getValidationTime() {
-        return LocalDateTime.now().plusHours(shortUrlComponent.getValidationHours());
+        return LocalDateTime.now().plusDays(shortUrlComponent.getValidationDays());
     }
 
     /**

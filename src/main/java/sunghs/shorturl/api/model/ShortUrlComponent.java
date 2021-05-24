@@ -11,9 +11,11 @@ public class ShortUrlComponent {
 
     private String prefixUrl;
 
+    private String defaultRedirectUrl;
+
     private String characterList;
 
-    private int validationHours;
+    private int validationDays;
 
     private int limitedCharacterSize;
 }
