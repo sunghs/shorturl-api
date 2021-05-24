@@ -5,6 +5,7 @@ buildscript {
         swaggerVersion = '3.0.0'
         swaggerModelVersion = '1.5.21'
         apacheCommonsVersion = '3.12.0'
+        commonsValidatorVersion = '1.7'
     }
 }
 
@@ -38,6 +39,7 @@ dependencies {
     implementation("org.projectlombok:lombok")
 
     implementation("org.apache.commons:commons-lang3:${apacheCommonsVersion}")
+    implementation("commons-validator:commons-validator:${commonsValidatorVersion}")
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.swagger:swagger-annotations:${swaggerModelVersion}")
     implementation("io.swagger:swagger-models:${swaggerModelVersion}")

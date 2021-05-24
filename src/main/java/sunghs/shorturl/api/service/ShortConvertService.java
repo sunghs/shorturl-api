@@ -3,8 +3,11 @@ package sunghs.shorturl.api.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sunghs.shorturl.api.exception.InvalidUrlException;
+import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
 import sunghs.shorturl.api.model.ShortUrlComponent;
 import sunghs.shorturl.api.model.ShortUrlRequestDto;
 import sunghs.shorturl.api.model.ShortUrlResponseDto;
@@ -25,6 +28,8 @@ public class ShortConvertService {
 
     private final ShortUrlInfoRepository shortUrlInfoRepository;
 
+    private final UrlValidator urlValidator;
+
     public String getPrefixUrl() {
         return shortUrlComponent.getPrefixUrl();
     }
@@ -41,6 +46,10 @@ public class ShortConvertService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ShortUrlResponseDto convert(final ShortUrlRequestDto requestDto) {
+        if (!urlValidator.isValid(requestDto.getOriginalUrl())) {
+            throw new InvalidUrlException(ExceptionCodeManager.INVALID_URL);
+        }
+
         Optional<ShortUrlInfo> optionalShortUrlInfo = shortUrlInfoRepository.findByOriginalUrlAndExpireDtGreaterThan(
             requestDto.getOriginalUrl(), LocalDateTime.now());
 

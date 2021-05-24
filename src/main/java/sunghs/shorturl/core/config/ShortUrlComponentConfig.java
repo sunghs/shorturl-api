@@ -1,5 +1,7 @@
 package sunghs.shorturl.core.config;
 
+import org.apache.commons.validator.routines.RegexValidator;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,6 +18,12 @@ public class ShortUrlComponentConfig implements InitializingBean {
     @ConfigurationProperties(prefix = "short")
     public ShortUrlComponent shortUrlComponent() {
         return new ShortUrlComponent();
+    }
+
+    @Bean
+    public UrlValidator urlValidator() {
+        RegexValidator regex = new RegexValidator(new String[] {"http", "https","((localhost)(:[0-9]+))"});
+        return new UrlValidator(regex, 0);
     }
 
     @Override
