@@ -46,7 +46,7 @@ public class UrlConvertService {
             seq /= characterArray.length;
         }
 
-        log.info("convert {} to {}", seq, result);
+        log.info("seq to short url convert success : {}", result);
         return result.toString();
     }
 
@@ -64,7 +64,7 @@ public class UrlConvertService {
             result += search(unfoldUrl[i]) * (Math.pow(characterArray.length, i));
         }
 
-        log.info("convert {} to {}", shortUrl, result);
+        log.info("short url to seq convert success : {}", result);
         return result;
     }
 
