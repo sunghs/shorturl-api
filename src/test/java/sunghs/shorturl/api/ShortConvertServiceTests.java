@@ -35,7 +35,6 @@ class ShortConvertServiceTests {
     @Transactional
     @DisplayName("단축 Url 변환 테스트")
     void shortConvertTest() {
-        log.info(">>>>>>>>>>>>>>>>>>>>>> {}", shortUrlRequestDto);
         ShortUrlResponseDto shortUrlResponseDto = shortConvertService.convert(shortUrlRequestDto);
         log.info("result : {}", shortUrlResponseDto.toString());
 
