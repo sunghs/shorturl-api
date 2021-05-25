@@ -40,7 +40,7 @@ class OriginalConvertServiceTests {
         ShortUrlResponseDto shortUrlResponseDto = shortConvertService.convert(shortUrlRequestDto);
 
         // then
-        Assertions.assertEquals(1, shortUrlResponseDto.getRequestCount());
+        Assertions.assertTrue(shortUrlResponseDto.getRequestCount() > 0);
         Assertions.assertTrue(StringUtils.isNotEmpty(shortUrlResponseDto.getShortUrl()));
 
         // short url to original url
@@ -53,6 +53,6 @@ class OriginalConvertServiceTests {
 
         // then
         Assertions.assertEquals(originalUrlResponseDto.getOriginalUrl(), shortUrlRequestDto.getOriginalUrl());
-        Assertions.assertEquals(1, originalUrlResponseDto.getRequestCount());
+        Assertions.assertEquals(shortUrlResponseDto.getRequestCount(), originalUrlResponseDto.getRequestCount());
     }
 }
