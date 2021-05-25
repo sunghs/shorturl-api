@@ -1,4 +1,4 @@
-package sunghs.shorturl.api;
+package sunghs.shorturl.api.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import sunghs.shorturl.api.exception.SequenceOverFlowException;
-import sunghs.shorturl.api.service.UrlConvertService;
 
 @Slf4j
 @SpringBootTest

@@ -1,4 +1,4 @@
-package sunghs.shorturl.api;
+package sunghs.shorturl.api.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

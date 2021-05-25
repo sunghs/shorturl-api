@@ -1,4 +1,4 @@
-package sunghs.shorturl.api;
+package sunghs.shorturl.api.service;
 
 import org.apache.commons.validator.routines.RegexValidator;
 import org.apache.commons.validator.routines.UrlValidator;
