@@ -58,7 +58,7 @@ Application 구동 후 Context의 Root Uri 진입 시 redirect 됩니다.
 
 ## 4. 기능 설명
 
-### 4-1 `/url/short (POST)`
+### 4-1. `/url/short (POST)`
 원본 URL을 단축 URL로 요청합니다.
 
 ### 4-2. `/url/original (POST)`
