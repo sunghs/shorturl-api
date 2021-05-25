@@ -14,6 +14,8 @@ import sunghs.shorturl.api.model.OriginalUrlResponseDto;
 import sunghs.shorturl.api.model.ShortUrlRequestDto;
 import sunghs.shorturl.api.model.ShortUrlResponseDto;
 
+import java.security.SecureRandom;
+
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -25,13 +27,14 @@ class OriginalConvertServiceTests {
 
     private final OriginalConvertService originalConvertService;
 
+    private final ShortUrlRequestDto shortUrlRequestDto = new ShortUrlRequestDto();
+
     @Test
     @DisplayName("원본 Url 변환 테스트")
     void originalConvertTest() {
         // original url to short url
         // given
-        ShortUrlRequestDto shortUrlRequestDto = new ShortUrlRequestDto();
-        shortUrlRequestDto.setOriginalUrl("https://www.test.com");
+        shortUrlRequestDto.setOriginalUrl("https://www.test.com?q=" + new SecureRandom().nextInt(9999));
 
         // when
         ShortUrlResponseDto shortUrlResponseDto = shortConvertService.convert(shortUrlRequestDto);
@@ -50,6 +53,6 @@ class OriginalConvertServiceTests {
 
         // then
         Assertions.assertEquals(originalUrlResponseDto.getOriginalUrl(), shortUrlRequestDto.getOriginalUrl());
-        Assertions.assertEquals(2, originalUrlResponseDto.getRequestCount());
+        Assertions.assertEquals(1, originalUrlResponseDto.getRequestCount());
     }
 }

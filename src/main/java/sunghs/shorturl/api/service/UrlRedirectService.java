@@ -10,6 +10,8 @@ import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
 import sunghs.shorturl.api.model.entity.ShortUrlInfo;
 import sunghs.shorturl.api.repository.ShortUrlInfoRepository;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class UrlRedirectService {
         long seq = urlConvertService.convertUrlToSeq(shortUrl);
 
         try {
-            ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findById(seq)
+            ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findBySeqAndExpireDtGreaterThan(seq, LocalDateTime.now())
                 .orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
 
             shortUrlInfo.addRequestCount();

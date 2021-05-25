@@ -8,4 +8,6 @@ import sunghs.shorturl.api.model.entity.ShortUrlInfo;
 public interface ShortUrlInfoRepository extends JpaRepository<ShortUrlInfo, Long> {
 
     Optional<ShortUrlInfo> findByOriginalUrlAndExpireDtGreaterThan(final String originalUrl, final LocalDateTime expireDt);
+
+    Optional<ShortUrlInfo> findBySeqAndExpireDtGreaterThan(final Long seq, final LocalDateTime expireDt);
 }

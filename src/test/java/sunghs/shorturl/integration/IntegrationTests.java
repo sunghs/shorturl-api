@@ -84,7 +84,7 @@ class IntegrationTests {
 
         // then
         Assertions.assertEquals(shortUrlRequestDto.getOriginalUrl(), originalUrlResponseDto.getOriginalUrl());
-        Assertions.assertEquals(2, originalUrlResponseDto.getRequestCount());
+        Assertions.assertEquals(1, originalUrlResponseDto.getRequestCount());
 
         // 단축 URL redirect 요청
         mockMvc.perform(MockMvcRequestBuilders.get("/" + removePrefixUrl(shortUrlResponseDto.getShortUrl())))

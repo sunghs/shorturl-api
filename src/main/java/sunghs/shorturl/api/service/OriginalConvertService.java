@@ -36,9 +36,6 @@ public class OriginalConvertService {
         ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findById(seq)
             .orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
 
-        shortUrlInfo.addRequestCount();
-        shortUrlInfoRepository.save(shortUrlInfo);
-
         return OriginalUrlResponseDto.of(shortUrlInfo);
     }
 
