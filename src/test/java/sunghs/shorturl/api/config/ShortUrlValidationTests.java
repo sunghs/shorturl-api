@@ -20,7 +20,6 @@ class ShortUrlValidationTests {
     @Test
     @DisplayName("application.yml 의 short 설정 확인 테스트")
     void componentValidationTest() {
-        log.info(shortUrlComponent.toString());
         Assertions.assertNotNull(shortUrlComponent);
     }
 
@@ -28,7 +27,6 @@ class ShortUrlValidationTests {
     @DisplayName("설정 임계 sequence 테스트")
     void limitedCountTest() {
         long limitedCount = (long) Math.pow(shortUrlComponent.getCharacterList().length(), shortUrlComponent.getLimitedCharacterSize());
-        log.info("limitedCount : {}", limitedCount);
         Assertions.assertTrue(limitedCount > 0);
     }
 }

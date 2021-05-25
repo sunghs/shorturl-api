@@ -26,11 +26,14 @@ class ShortConvertServiceTests {
     @Transactional
     @DisplayName("단축 Url 변환 테스트")
     void shortConvertTest() {
+        // given
         ShortUrlRequestDto shortUrlRequestDto = new ShortUrlRequestDto();
         shortUrlRequestDto.setOriginalUrl("http://www.test.com");
-        ShortUrlResponseDto shortUrlResponseDto = shortConvertService.convert(shortUrlRequestDto);
-        log.info("result : {}", shortUrlResponseDto.toString());
 
+        // when
+        ShortUrlResponseDto shortUrlResponseDto = shortConvertService.convert(shortUrlRequestDto);
+
+        // then
         Assertions.assertTrue(shortUrlResponseDto.getExpireDt().isAfter(LocalDateTime.now()));
         Assertions.assertTrue(StringUtils.isNotEmpty(shortUrlResponseDto.getShortUrl()));
     }
@@ -39,9 +42,11 @@ class ShortConvertServiceTests {
     @Transactional
     @DisplayName("유효하지 않은 단축 Url 변환 테스트")
     void shortConvertErrorParameterTest() {
+        // given
         ShortUrlRequestDto shortUrlRequestDto = new ShortUrlRequestDto();
         shortUrlRequestDto.setOriginalUrl("www.test.com");
 
+        // when & then
         Assertions.assertThrows(InvalidUrlException.class, () -> shortConvertService.convert(shortUrlRequestDto));
     }
 }

@@ -23,6 +23,7 @@ public class JpaTests {
     @Test
     @DisplayName("JPA 삽입 테스트")
     void jpaTest() {
+        // given
         final ShortUrlInfo shortUrlInfo = ShortUrlInfo.builder()
             .originalUrl("original-url-test")
             .shortUrl("short-url-test")
@@ -31,8 +32,10 @@ public class JpaTests {
             .expireDt(LocalDateTime.now().plusDays(1))
             .build();
 
+        // when
         shortUrlInfoRepository.save(shortUrlInfo);
 
+        // then
         Assertions.assertTrue(shortUrlInfo.getSeq() > 0);
     }
 }

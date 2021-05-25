@@ -21,8 +21,9 @@ class UrlValidationTests {
     })
     @NullAndEmptySource
     @DisplayName("유효하지 않은 URL 테스트")
-    void invalidParameterTest1(String url) {
-        Assertions.assertFalse(urlValidator.isValid(url));
+    void invalidParameterTest1(String given) {
+        // when & then
+        Assertions.assertFalse(urlValidator.isValid(given));
     }
 
     @ParameterizedTest
@@ -34,7 +35,8 @@ class UrlValidationTests {
         "http://localhost:8080"
     })
     @DisplayName("유효한 URL 테스트")
-    void validParameterTest(String url) {
-        Assertions.assertTrue(urlValidator.isValid(url));
+    void validParameterTest(String given) {
+        // when & then
+        Assertions.assertTrue(urlValidator.isValid(given));
     }
 }
