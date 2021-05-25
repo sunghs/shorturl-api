@@ -9,6 +9,7 @@ public enum ExceptionCodeManager {
     ALREADY_SHORT_URL_EXIST("1003", "이미 단축 URL이 존재합니다."),
     SHORT_URL_NOT_FOUND("1004", "유효하지 않은 단축 URL 입니다."),
     INVALID_URL("1005", "유효하지 않은 URL 입니다."),
+    REDIRECT_ERROR("1006", ""),
     SYSTEM_ERROR("9999", "");
 
     @Getter

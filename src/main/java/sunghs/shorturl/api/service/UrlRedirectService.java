@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sunghs.shorturl.api.exception.PageNotFoundException;
 import sunghs.shorturl.api.exception.ShortUrlNotFoundException;
 import sunghs.shorturl.api.exception.handler.ExceptionCodeManager;
 import sunghs.shorturl.api.model.entity.ShortUrlInfo;
@@ -28,12 +29,16 @@ public class UrlRedirectService {
     public String getOriginalUrl(final String shortUrl) {
         long seq = urlConvertService.convertUrlToSeq(shortUrl);
 
-        ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findById(seq)
-            .orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
+        try {
+            ShortUrlInfo shortUrlInfo = shortUrlInfoRepository.findById(seq)
+                .orElseThrow(() -> new ShortUrlNotFoundException(ExceptionCodeManager.SHORT_URL_NOT_FOUND));
 
-        shortUrlInfo.addRequestCount();
-        shortUrlInfoRepository.save(shortUrlInfo);
+            shortUrlInfo.addRequestCount();
+            shortUrlInfoRepository.save(shortUrlInfo);
 
-        return shortUrlInfo.getOriginalUrl();
+            return shortUrlInfo.getOriginalUrl();
+        } catch(ShortUrlNotFoundException e) {
+            throw new PageNotFoundException(ExceptionCodeManager.REDIRECT_ERROR);
+        }
     }
 }
