@@ -16,7 +16,7 @@ import sunghs.shorturl.api.repository.ShortUrlInfoRepository;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @RequiredArgsConstructor
-public class JpaTests {
+class JpaTests {
 
     private final ShortUrlInfoRepository shortUrlInfoRepository;
 
