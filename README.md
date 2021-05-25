@@ -14,7 +14,7 @@
 ### 2-1. DB는 docker 의 mysql official image로 개발환경을 구성하였습니다.
 
 ```
-docker run -d -p 10000:3306 -e MYSQL_ROOT_PASSWORD=password --name mysql mysql:5.7
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password --name mysql mysql:5.7
 ```
 
 테이블 명을 소문자로 사용하므로 내부의 docker.cnf 의 수정이 필요합니다.
