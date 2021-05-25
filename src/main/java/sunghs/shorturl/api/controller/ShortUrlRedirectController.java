@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 import sunghs.shorturl.api.service.UrlRedirectService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@Api(value = "ShortUrlRedirectController", tags = "단축 URL 이동 컨트롤러")
+@Api(value = "ShortUrlRedirectController", tags = "단축 URL 이동 컨트롤러, 브라우저에서 redirect 기능으로 동작하므로 swagger 에서 숨김 처리")
+@ApiIgnore
 @ApiResponses(value = {
     @ApiResponse(code = 200, message = "OK, 성공"),
     @ApiResponse(code = 307, message = "Temporary Redirect, URI가 변경 됨"),
