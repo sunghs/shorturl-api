@@ -29,7 +29,6 @@ import sunghs.shorturl.api.model.ShortUrlResponseDto;
 @RequiredArgsConstructor
 class IntegrationTests {
 
-
     private final MockMvc mockMvc;
 
     private final ObjectMapper objectMapper;
