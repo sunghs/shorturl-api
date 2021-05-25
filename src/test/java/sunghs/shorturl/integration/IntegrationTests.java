@@ -16,6 +16,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 import sunghs.shorturl.api.model.OriginalUrlRequestDto;
 import sunghs.shorturl.api.model.OriginalUrlResponseDto;
 import sunghs.shorturl.api.model.ShortUrlComponent;
@@ -46,6 +47,7 @@ class IntegrationTests {
     }
 
     @Test
+    @Transactional
     @DisplayName("단축URL -> 원본URL -> redirect 테스트")
     void integrationTest() throws Exception {
         // 단축 URL 요청
